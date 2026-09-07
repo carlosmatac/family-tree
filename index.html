@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Árbol familiar de Carlos Mata Carrillo</title>
+<style>
+  :root{
+    --mata:#2b6cb0; --mata-bg:#eaf2fb;
+    --carrillo:#2f855a; --carrillo-bg:#ecf7f0;
+    --user:#c05621; --user-bg:#fdf1e3;
+    --ink:#1a202c; --muted:#5a6572; --line:#c9d2dc;
+    --prob:#8a8f98;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+       background:#f7f8fa; color:var(--ink); line-height:1.5; padding-bottom:60px}
+  header{background:#fff; border-bottom:1px solid #e2e8f0; padding:20px 16px 14px; text-align:center}
+  header h1{font-size:1.35rem; margin-bottom:4px}
+  header p{color:var(--muted); font-size:.85rem}
+  .legend{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:10px}
+  .badge{display:inline-block; font-size:.68rem; font-weight:700; letter-spacing:.03em;
+         padding:2px 8px; border-radius:999px; vertical-align:middle}
+  .b-conf{background:#e6f4ea; color:#1e7e34; border:1px solid #1e7e34}
+  .b-fam{background:#fff4e0; color:#b06a00; border:1px solid #d9930d}
+  .b-prob{background:#f1f1f1; color:#666; border:1px dashed #999}
+  .wrap{max-width:760px; margin:0 auto; padding:14px 12px}
+  .branch{margin:18px 0 8px; padding:10px 14px; border-radius:10px; color:#fff; font-weight:700; font-size:1.05rem}
+  .branch small{display:block; font-weight:400; font-size:.78rem; opacity:.92}
+  .branch.mata{background:var(--mata)} .branch.carrillo{background:var(--carrillo)}
+  .gen{font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted);
+       margin:16px 4px 6px; font-weight:700}
+  .person{background:#fff; border:1px solid #e2e8f0; border-left:5px solid var(--line);
+          border-radius:10px; margin:8px 0; overflow:hidden}
+  .person.mata{border-left-color:var(--mata)}
+  .person.carrillo{border-left-color:var(--carrillo)}
+  .person.user{border-left-color:var(--user)}
+  .person.probable{background:repeating-linear-gradient(135deg,#fff,#fff 10px,#fafbfc 10px,#fafbfc 20px)}
+  .p-head{display:flex; align-items:center; justify-content:space-between; gap:8px;
+          padding:12px 14px; cursor:pointer; -webkit-tap-highlight-color:transparent}
+  .p-head .nm{font-weight:700; font-size:.98rem}
+  .p-head .dt{color:var(--muted); font-size:.78rem; margin-top:1px}
+  .p-head .chev{color:var(--muted); font-size:.8rem; transition:transform .2s}
+  .person.open .p-head .chev{transform:rotate(90deg)}
+  .badges{margin-top:4px; display:flex; gap:5px; flex-wrap:wrap}
+  .p-body{display:none; padding:0 14px 13px; font-size:.87rem}
+  .person.open .p-body{display:block}
+  .p-body dl{margin:6px 0}
+  .p-body dt{font-weight:700; font-size:.76rem; text-transform:uppercase; letter-spacing:.05em;
+             color:var(--muted); margin-top:8px}
+  .p-body dd{margin:2px 0 0}
+  .srcs{margin-top:10px}
+  .srcs a{display:block; color:var(--mata); word-break:break-all; font-size:.8rem; padding:3px 0; text-decoration:none}
+  .srcs a::before{content:"🔗 "}
+  .srcs a:active{text-decoration:underline}
+  .couple{text-align:center; color:var(--muted); font-size:.75rem; margin:-4px 0 6px}
+  footer{max-width:760px; margin:26px auto 0; padding:0 14px; color:var(--muted); font-size:.78rem}
+  footer p{margin:8px 0}
+  @media (min-width:640px){ header h1{font-size:1.7rem} }
+</style>
+</head>
+<body>
+<header>
+  <h1>Árbol familiar de Carlos Mata Carrillo</h1>
+  <p>Investigación en fuentes públicas · Granada, septiembre de 2026 · Toca a cada persona para ver su ficha completa</p>
+  <div class="legend">
+    <span class="badge b-conf">CONFIRMADO</span>
+    <span class="badge b-fam">TESTIMONIO FAMILIAR</span>
+    <span class="badge b-prob">PROBABLE / HIPÓTESIS</span>
+  </div>
+</header>
+<div class="wrap" id="app"></div>
+<footer>
+  <p><b>Cómo leerlo:</b> CONFIRMADO = respaldado por documento público (con enlace). TESTIMONIO FAMILIAR = confirmado directamente por la familia; su documentación pública sigue en curso. PROBABLE = hipótesis razonada aún por verificar.</p>
+  <p>Rama Mata: arraigada en Alcaudete (Jaén). Rama Carrillo: Nigüelas y el Valle de Lecrín (Granada), documentada en el árbol colaborativo de FamilySearch (aportaciones de usuarios, en su mayoría sin fuentes adjuntas).</p>
+</footer>
+<script>
+const DATA = [
+ {branch:"user", gen:"Carlos y su hermana", people:[
+  {name:"Carlos Mata Carrillo", dates:"Granada", conf:"conf",
+   facts:[["Quién es","El protagonista de este árbol."],["Oficio","Data Architect; cofundador de Aksum."],["Residencia","Granada."]],
+   srcs:[]},
+  {name:"Elena Mata Carrillo", dates:"", conf:"fam",
+   facts:[["Parentesco","Hermana de Carlos (confirmado por él). Se omite perfil por ser persona viva y privada."]],
+   srcs:[]},
+ ]},
+ {branch:"user", gen:"Padres", people:[
+  {name:"Andrés Mata Caro", dates:"", conf:"conf", cls:"mata",
+   facts:[["Oficio","Arquitecto en Granada; dirige su propio estudio (Mata Caro Arquitectura), fundado en 1993."],["Residencia","Granada."]],
+   srcs:["https://andres-mata-caro.es","https://www.coaatgr.es"]},
+  {name:"Clara Eugenia Carrillo Fuillerat", dates:"", conf:"fam", cls:"carrillo",
+   facts:[["Oficio","La familia la vincula al ámbito del COAAT Granada (Colegio de Aparejadores y Arquitectos Técnicos); identidad profesional probable en publicaciones del colegio (revista Alzada)."],["Residencia","Granada."]],
+   srcs:["https://www.coaatgr.es"]},
+ ]},
+
+ {branch:"mata", gen:"Abuelos · Rama Mata", people:[
+  {name:"Andrés Mata Arjona", dates:"Alcaudete (Jaén), 1926 – Granada, ~2010 (según la familia, en torno al 4 de noviembre)", conf:"conf",
+   facts:[["Oficio","Químico. Catedrático de la Universidad de Granada y, tras retirarse, profesor emérito (adscrito 1992-2006 según el listado oficial de eméritos de la UGR)."],
+          ["Dato curioso","El listado de eméritos de la UGR marca el 30/09/2006 como fin de su adscripción (no su fallecimiento): la familia recuerda su muerte hacia el 4/11/2010."],
+          ["Origen","Natural de Alcaudete (Jaén); desarrolló su carrera en Granada."]],
+   srcs:["https://emeritos.ugr.es/print/pdf/node/10","https://emeritos.ugr.es"]},
+  {name:"Rosario Caro Jiménez", dates:"", conf:"conf",
+   facts:[["Oficio","Funcionaria de Hacienda; se graduó en Magisterio por la Universidad de Granada (testimonio familiar)."],
+          ["Vínculo con Loja","Confirmado por la familia (posible raigambre de época morisca). Figura como «Caro Jiménez, María Rosario», propietaria de tierras junto a Loja (Granada), en el expediente de expropiación de ADIF para la línea Bobadilla-Granada (BOE, 18/02/2015)."]],
+   srcs:["https://www.boe.es/diario_boe/txt.php?id=BOE-B-2015-5040"]},
+ ]},
+ {branch:"mata", gen:"Bisabuelos · Rama Mata (padres de Andrés)", people:[
+  {name:"Leandro Mata Funes", dates:"Alcaudete (Jaén)", conf:"fam",
+   facts:[["Parentesco","Padre de Andrés Mata Arjona (confirmado por la familia). Sin rastro documental público localizado todavía."],
+          ["Hipótesis abierta","El nombre «Leandro Mata» se repite en la Alcaudete de la época (la dinastía confitera de Productos Mata): parentesco plausible pero no demostrado."]],
+   srcs:[]},
+  {name:"Manuela Arjona", dates:"", conf:"fam",
+   facts:[["Parentesco","Madre de Andrés Mata Arjona (confirmado por la familia); de ella viene su segundo apellido."]],
+   srcs:[]},
+ ]},
+ {branch:"mata", gen:"Bisabuelos · Rama Caro-Jiménez (padres de Rosario)", people:[
+  {name:"Carlos Caro Martínez de Tejada", dates:"", conf:"fam",
+   facts:[["Parentesco","Padre de Rosario Caro Jiménez (confirmado por la familia). El apellido compuesto «Caro Martínez de Tejada» es muy poco común; la conexión familiar con Loja apunta a esa comarca."]],
+   srcs:[]},
+  {name:"Josefa Jiménez Fernández de Córdoba", dates:"", conf:"fam",
+   facts:[["Parentesco","Madre de Rosario Caro Jiménez (confirmado por la familia)."]],
+   srcs:[]},
+ ]},
+ {branch:"mata", gen:"Parientes probables · Rama Mata (hipótesis en estudio)", people:[
+  {name:"Manuel Mata Funes", dates:"siglo XX", conf:"prob",
+   facts:[["Por qué interesa","Mismo raro par de apellidos y mismo pueblo: probablemente hermano o pariente cercano de Leandro Mata Funes, es decir, posible tío paterno de Andrés."],
+          ["Oficio","Médico en Alcaudete; médico de enfermedades tropicales en Angola (Lobito, 1962)."],
+          ["Datos curiosos","Escritor: memorias «Yamba (elefante)» (1987). Espeleólogo aficionado: exploró la Gruta del Murciélago de Zuheros en 1946 y lo publicó en el Boletín de la Real Academia de Córdoba. Una monografía francesa de geología (1975) le agradece su ayuda como «médecin à Alcaudete». Su casa estaba frente al parque de la Fuensanta."]],
+   srcs:["https://alcaudete.jimdofree.com/leyendas-relatos-y-tradiciones/leyendas/martinillo-zancajo-un-guerrero-de-leyenda-por-manuel-mata-funes/","https://www.persee.fr/doc/geoly_0076-1672_1975_mon_65_1","https://dialnet.unirioja.es/servlet/articulo?codigo=7492956","https://www.armanax.com/maqueta-de-la-casa-d-manuel-mata.html"]},
+  {name:"«L. Mata Arjona»", dates:"activo en 1930", conf:"prob",
+   facts:[["Por qué interesa","Un anuncio de 1930 en la prensa de Jaén lo muestra como agente comercial en Alcaudete. Con los apellidos Mata Arjona, podría ser hijo de Leandro y Manuela: es decir, un posible hermano de Andrés."]],
+   srcs:["https://www.dipujaen.es/hemerotecadigital/"]},
+  {name:"Leandro Mata Carrillo × María Burgos Salazar", dates:"obrador fundado en 1897", conf:"prob",
+   facts:[["Quiénes son","Fundadores de la dinastía confitera Productos Mata de Alcaudete (hojaldrinas, mantecados). Leandro murió en 1910."],
+          ["Hijos destacados","Carlos Mata Burgos (impulsó la fábrica) y Leandro Mata Burgos (banquero; alcalde de Alcaudete 1924-1930 y 1940-1941; fundó la biblioteca pública en 1924)."],
+          ["Vínculo con nuestra rama","Por confirmar: la repetición del nombre Leandro en el mismo pueblo sugiere parentesco con Leandro Mata Funes, pero no hay documento que lo pruebe."]],
+   srcs:["http://www.redjaen.es/francis/?m=c&o=72052","https://landaluz.es/asociado/productos-mata/","https://bancaandalucia.blogspot.com/2011/02/alcaudete.html","https://alcaudete.jimdofree.com/alcaldes/alcaldes-de-alcaudete-del-1900-al-2016/","https://www.productosmata.com"]},
+ ]},
+
+ {branch:"carrillo", gen:"Abuelos · Rama Carrillo", people:[
+  {name:"Dionisio Carrillo Robles", dates:"Nigüelas (Granada), 30/12/1922 – Granada, 29/10/2021", conf:"conf",
+   facts:[["Oficio","Escritor; autor de «La máquina de escribir»."],
+          ["Origen","Natural de Nigüelas, en el Valle de Lecrín; la familia Carrillo está documentada allí desde al menos 1844."]],
+   srcs:["https://www.familysearch.org/tree/person/details/L287-XD6","https://rincondesileno.blogspot.com"]},
+  {name:"Amelia Fuillerat Cádiz", dates:"Granada, 3/6/1927 – Granada, 30/5/2020", conf:"conf",
+   facts:[["Familia","Hija de José Fuillerat García y Trinidad Cádiz Aljama. Sus hermanos: José, Trinidad, Dolores, Francisco y María Teresa."]],
+   srcs:["https://www.familysearch.org/tree/person/details/L286-9BM"]},
+ ]},
+ {branch:"carrillo", gen:"Bisabuelos · Rama Carrillo", people:[
+  {name:"Manuel José Carrillo Megías", dates:"Nigüelas, 23/2/1880 – 13/12/1963", conf:"conf",
+   facts:[["Familia","Casado con Luisa Isabel Robles Casares; siete hijos, entre ellos Dionisio y Antonio."]],
+   srcs:["https://www.familysearch.org/tree/person/details/L6T9-9CJ"]},
+  {name:"Luisa Isabel Robles Casares", dates:"Nigüelas, 6/7/1883 – 21/12/1971", conf:"conf",
+   facts:[["Dato curioso","Bautizada en la iglesia de San Juan Bautista de Nigüelas."]],
+   srcs:["https://www.familysearch.org/tree/person/details/L6T9-9KL"]},
+  {name:"José Fuillerat García", dates:"n. Utrera (Sevilla) – m. Granada, 30/8/1940", conf:"conf",
+   facts:[["Origen","Nació en Utrera (Sevilla); se casó en Algeciras en 1912 y murió en Granada en 1940. Su madre registrada: Dolores García."]],
+   srcs:["https://www.familysearch.org/tree/person/details/L2D4-FPV"]},
+  {name:"Trinidad Cádiz Aljama", dates:"m. 1982", conf:"conf",
+   facts:[["Familia","Boda con José Fuillerat García en Algeciras en 1912."]],
+   srcs:["https://www.familysearch.org/tree/person/details/L2D4-FB2"]},
+ ]},
+ {branch:"carrillo", gen:"Tatarabuelos · Rama Carrillo (probables, generación sin fuentes en FamilySearch)", people:[
+  {name:"Francisco Carrillo Morales × Mª del Carmen Megías Puerta", dates:"n. 1844, Nigüelas", conf:"prob",
+   facts:[["Estado","Constan en el árbol colaborativo de FamilySearch sin fuentes adjuntas: plausible pero por verificar en el archivo parroquial de Nigüelas."]],
+   srcs:["https://www.familysearch.org"]},
+  {name:"Félix Robles López × Albertina Casares Casares", dates:"1860–1935 / 1862–1930, Nigüelas", conf:"prob",
+   facts:[["Estado","Misma situación: árbol colaborativo sin fuentes adjuntas."]],
+   srcs:["https://www.familysearch.org"]},
+  {name:"Margarita Carrillo Robles", dates:"Nigüelas, m. ~1888", conf:"prob",
+   facts:[["Por qué interesa","Madre del Dr. Evaristo Pérez Carrillo, médico e historiador aficionado que documentó la comarca; parentesco exacto con la línea principal por confirmar."]],
+   srcs:["https://www.adurcal.com"]},
+ ]},
+ {branch:"carrillo", gen:"Familia extensa · Rama Carrillo", people:[
+  {name:"Antonio Carrillo Robles", dates:"m. 2013", conf:"prob",
+   facts:[["Parentesco","Hermano de Dionisio; probablemente el sacerdote y traductor jurado fallecido en 2013."]],
+   srcs:["https://www.familysearch.org"]},
+  {name:"Trinidad Fuillerat Cádiz (tía de Clara)", dates:"Algeciras, 29/12/1925 – Tarrasa, 27/7/2014", conf:"conf",
+   facts:[["Familia","Hermana de Amelia. Se casó con Rafael Reyes Ortega en Antequera el 12/9/1949. FamilySearch conserva una fotografía suya."]],
+   srcs:["https://www.familysearch.org/tree/person/details/L155-1ZW"]},
+  {name:"Tíos maternos de Carlos (confirmados por él)", dates:"", conf:"fam",
+   facts:[["Luis Felipe Carrillo Fuillerat","Abogado y mediador."],
+          ["Dionisio Antonio Carrillo Fuillerat","Secretario judicial (hoy Letrado de la Administración de Justicia); consta en el buscador oficial del Ministerio de Justicia."],
+          ["José Manuel Carrillo Fuillerat","Funcionario de Hacienda; consta en Málaga en 1997."]],
+   srcs:["https://remediabuscador.mjusticia.gob.es"]},
+ ]},
+];
+
+const BADGE = {
+  conf: '<span class="badge b-conf">CONFIRMADO</span>',
+  fam:  '<span class="badge b-fam">TESTIMONIO FAMILIAR</span>',
+  prob: '<span class="badge b-prob">PROBABLE</span>'
+};
+
+const app = document.getElementById('app');
+let curBranch = null;
+DATA.forEach(sec=>{
+  if(sec.branch !== curBranch && (sec.branch==="mata" || sec.branch==="carrillo")){
+    curBranch = sec.branch;
+    const b = document.createElement('div');
+    b.className = 'branch ' + curBranch;
+    b.innerHTML = curBranch==="mata"
+      ? 'Rama Mata<small>Alcaudete (Jaén) → Granada</small>'
+      : 'Rama Carrillo<small>Nigüelas y Valle de Lecrín (Granada)</small>';
+    app.appendChild(b);
+  }
+  const g = document.createElement('div');
+  g.className = 'gen'; g.textContent = sec.gen;
+  app.appendChild(g);
+  sec.people.forEach(p=>{
+    const cls = p.cls || sec.branch;
+    const el = document.createElement('div');
+    el.className = 'person ' + cls + (p.conf==="prob" ? " probable" : "");
+    const facts = p.facts.map(f=>`<dt>${f[0]}</dt><dd>${f[1]}</dd>`).join('');
+    const srcs = (p.srcs||[]).map(u=>`<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\//,'')}</a>`).join('');
+    el.innerHTML = `
+      <div class="p-head">
+        <div>
+          <div class="nm">${p.name}</div>
+          ${p.dates ? `<div class="dt">${p.dates}</div>` : ''}
+          <div class="badges">${BADGE[p.conf]||''}</div>
+        </div>
+        <div class="chev">▶</div>
+      </div>
+      <div class="p-body">
+        <dl>${facts}</dl>
+        ${srcs ? `<div class="srcs"><dt style="font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700">Fuentes</dt>${srcs}</div>` : ''}
+      </div>`;
+    el.querySelector('.p-head').addEventListener('click', ()=> el.classList.toggle('open'));
+    app.appendChild(el);
+  });
+});
+</script>
+</body>
+</html>
